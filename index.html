@@ -5,14 +5,14 @@
 @media(max-width:1280px){.layout{grid-template-columns:240px minmax(0,1fr)}.search-panel{grid-column:2;grid-row:2}.file-panel{grid-row:1/span 2}.files{max-height:70vh}}@media(max-width:730px){.app{padding:13px 10px 25px}.top{padding:3px 3px 0}.logo h1{font-size:18px}.top-actions{width:100%}.top-actions .btn{flex:1;font-size:12px}.layout{display:block}.panel{margin-bottom:12px;border-radius:13px}.file-panel,.search-panel{display:none}.file-panel.mobile-show,.search-panel.mobile-show,.editor-panel.mobile-show{display:block}.editor-panel{display:none}.mobile-navbar{display:flex;position:sticky;top:0;z-index:11;padding:6px 0 11px;gap:6px;background:#0c0f19}.mobile-navbar button{flex:1;padding:11px 4px;font-size:12px}.mobile-navbar .active{background:#7663ed;color:white}.panel-body{padding:13px}.cover{height:120px;width:120px}.cover .placeholder{font-size:42px}.identity{gap:11px}.cover-actions h3{font-size:13px}.cover-actions p{font-size:11px}.fields{gap:11px}.f input,.f textarea{font-size:16px}.files{max-height:none;min-height:150px}.result-list{max-height:none}.drop{padding:15px}.no-file{min-height:300px}}@media(max-width:400px){.cover{width:105px;height:105px}.cover-actions .btn{padding:8px 8px}.cover-actions .inline{gap:5px}}
 </style></head>
 <body><div class="app">
-<header class="top"><div class="logo"><div class="logo-mark">♫</div><div><h1>MP3 Tag Studio <span style="color:#9d8bff;font-size:12px">v1.2</span></h1><small>한글 음악 정보 복원 · 앨범아트 · 가사 · 로컬 ID3 편집</small></div></div><div class="top-actions"><button class="btn" id="pickBtn">＋ MP3 추가</button><button class="btn light" id="handlePickBtn" title="파일에 쓰기 권한을 연결하여 같은 원본 파일에 덮어쓸 수 있습니다">＋ 원본 수정용 열기</button><button class="btn light" id="autoAllBtn" disabled>전체 자동매칭</button><button class="btn primary" id="zipBtn" disabled>전체 ZIP 저장 ↓</button></div></header>
+<header class="top"><div class="logo"><div class="logo-mark">♫</div><div><h1>MP3 Tag Studio <span style="color:#9d8bff;font-size:12px">v1.2.1</span></h1><small>한글 음악 정보 복원 · 앨범아트 · 가사 · 로컬 ID3 편집</small></div></div><div class="top-actions"><button class="btn" id="pickBtn">＋ MP3 추가</button><button class="btn light" id="handlePickBtn" title="파일에 쓰기 권한을 연결하여 같은 원본 파일에 덮어쓸 수 있습니다">＋ 원본 수정용 열기</button><button class="btn light" id="autoAllBtn" disabled>전체 자동매칭</button><button class="btn primary" id="zipBtn" disabled>전체 ZIP 저장 ↓</button></div></header>
 <div class="mobile-navbar"><button class="btn" data-view="files">① 파일</button><button class="btn active" data-view="editor">② 편집</button><button class="btn" data-view="search">③ 검색</button></div>
 <div class="layout">
 <section class="panel file-panel" id="filesPanel"><div class="panel-head"><h2>음악 파일 <span class="file-count" id="fileCount">0</span></h2><button class="btn sm ghost danger" id="clearAll">전체 삭제</button></div><div class="drop" id="dropZone">🎵 파일을 이곳에 끌어 놓거나<br><button class="btn sm" id="dropPick">파일 선택</button><div style="margin-top:6px;color:#8392b5">MP3 여러 개 선택 가능 · 파일 서버 업로드 없음</div></div><div class="files" id="fileList"><div class="empty">MP3를 추가해 주세요.</div></div><div style="padding:0 12px 12px"><div class="bar"><span id="progress"></span></div><small id="progressText" class="hint"></small></div></section>
 <section class="panel editor-panel" id="editorPanel"><div class="panel-head"><h2>태그 편집</h2><span id="tagStatus" class="hint">파일을 선택하세요</span></div><div id="editorEmpty" class="no-file"><div class="empty"><span class="big">🎧</span>MP3 파일을 추가하면<br>현재 태그를 읽어 편집할 수 있습니다.</div></div><div class="panel-body" id="editorBody" hidden>
 <div class="identity"><div class="cover" id="coverBox"><span class="placeholder">♫</span></div><div class="cover-actions"><h3>앨범아트</h3><p>검색한 음반 이미지 또는<br>직접 선택한 이미지를 MP3에 삽입합니다.</p><div class="inline"><button class="btn sm" id="coverPick">이미지 변경</button><button class="btn sm ghost" id="coverRemove">삭제</button><button class="btn sm ghost" id="coverExternal" hidden>검색 이미지 열기 ↗</button></div><div id="coverStatus" class="art-status" role="status" aria-live="polite">앨범아트를 선택해 주세요.</div><div class="track-name" id="fileName"></div><span id="fileMeta" class="muted"></span></div></div>
 <audio class="audio" id="audioPlayer" controls preload="metadata"></audio><div class="hint" style="line-height:1.6;margin:-9px 0 14px">미리듣기는 불러온 원본 음원을 재생합니다. 브라우저 기본 재생바는 앨범아트를 표시하지 않습니다. 저장 파일의 태그/표지는 별도로 검사합니다.</div>
-<div class="inline" style="margin-bottom:10px"><button class="btn primary" id="saveBtn">다른 이름으로 저장 ↓</button><button class="btn" id="overwriteBtn" title="가능한 환경에서는 원본을 직접 교체합니다. 미지원 환경에서는 같은 이름으로 다운로드합니다.">원본 덮어쓰기</button><button class="btn sm ghost" id="verifyBtn">저장 전 태그 검사</button><button class="btn" id="autoBtn">정보 자동 검색</button><button class="btn ghost" id="youtubeOpen">YouTube Music 검색 ↗</button></div><div class="notice" id="overwriteHint">새 파일 저장은 원본을 변경하지 않습니다. 원본 덮어쓰기는 지원 브라우저에서만 가능하며 직접 확인이 필요합니다.</div>
+<div class="inline" style="margin-bottom:10px"><button class="btn primary" id="saveBtn">다른 이름으로 저장 ↓</button><button class="btn" id="overwriteBtn" title="가능한 환경에서는 원본을 직접 교체합니다. 미지원 환경에서는 같은 이름으로 다운로드합니다.">원본 덮어쓰기</button><button class="btn sm ghost" id="refreshBtn" title="파일이 외부에서 변경되거나 저장 오류가 발생하면 디스크의 원본을 다시 읽습니다. 입력한 메타데이터는 유지합니다." hidden>원본 다시 읽기</button><button class="btn sm ghost" id="verifyBtn">저장 전 태그 검사</button><button class="btn" id="autoBtn">정보 자동 검색</button><button class="btn ghost" id="youtubeOpen">YouTube Music 검색 ↗</button></div><div class="notice" id="overwriteHint">새 파일 저장은 원본을 변경하지 않습니다. 원본 덮어쓰기는 지원 브라우저에서만 가능하며 직접 확인이 필요합니다.</div>
 <div id="saveFeedback" class="save-feedback" role="status" aria-live="polite">파일을 저장하면 곡명·가수·앨범아트 삽입 여부를 검사합니다.</div><div class="fields" id="fieldArea"><div class="f"><label for="title">곡명 / 노래 제목</label><input id="title" data-field="title" placeholder="한글 곡명"></div><div class="f"><label for="artist">가수 / 아티스트</label><input id="artist" data-field="artist" placeholder="가수 이름 입력"></div><div class="f"><label for="album">앨범명</label><input id="album" data-field="album" placeholder="앨범명"></div><div class="f"><label for="albumArtist">앨범 아티스트</label><input id="albumArtist" data-field="albumArtist" placeholder="앨범 아티스트"></div><div class="f"><label for="year">발매 연도</label><input id="year" data-field="year" placeholder="2026" inputmode="numeric"></div><div class="f"><label for="genre">장르</label><input id="genre" data-field="genre" placeholder="K-Pop"></div><div class="f"><label for="track">트랙 번호</label><input id="track" data-field="track" placeholder="1 또는 1/12"></div><div class="f"><label for="disc">디스크 번호</label><input id="disc" data-field="disc" placeholder="1"></div><div class="f wide"><label for="composer">작곡가</label><input id="composer" data-field="composer" placeholder="선택 입력"></div></div>
 <hr class="sep"><div class="subheading"><h3>가사</h3><div class="lyric-controls"><button class="btn sm" id="lyricsBtn">가사 검색</button><button class="btn sm ghost" id="lrcBtn">LRC 저장 ↓</button></div></div><div class="f"><label for="lyrics">일반 가사 · MP3 USLT 태그로 저장</label><textarea id="lyrics" placeholder="검색하거나 가사를 직접 입력하세요"></textarea></div><div class="f" style="margin-top:12px"><label for="synced">시간 동기화 가사 · SYLT 태그로 저장 (플레이어 지원 필요)</label><textarea id="synced" placeholder="[00:12.50]첫 번째 가사&#10;[00:17.20]두 번째 가사" style="min-height:95px"></textarea></div><div class="privacy">* 새 파일로 저장하면 원본은 유지됩니다. 「원본 덮어쓰기」는 확인 후 원본 파일 자체를 변경하므로 중요한 음원은 미리 백업하세요.</div>
 </div></section>
@@ -82,14 +82,36 @@ function pictureFrame(cover){return frame('APIC',join(Uint8Array.of(0),latinByte
 function isJpeg(bytes){return bytes.length>=4&&bytes[0]===255&&bytes[1]===216&&bytes[bytes.length-2]===255&&bytes[bytes.length-1]===217}
 function isPng(bytes){return bytes.length>=8&&bytes[0]===137&&bytes[1]===80&&bytes[2]===78&&bytes[3]===71}
 function syncedFrame(lrc){const lines=[];for(const row of lrc.split(/\r?\n/)){const matchAll=[...row.matchAll(/\[(\d{1,3}):(\d{2})(?:[.:](\d{1,3}))?\]/g)];if(!matchAll.length)continue;const lyric=row.replace(/\[(\d{1,3}):(\d{2})(?:[.:]\d{1,3})?\]/g,'').trim();if(!lyric)continue;for(const m of matchAll){const frac=m[3]||'0',ms=Math.round((Number(m[1])*60+Number(m[2]))*1000+Number('0.'+frac)*1000);if(ms>=0&&ms<=0xffffffff)lines.push({ms,text:lyric})}}if(!lines.length)return null;lines.sort((a,b)=>a.ms-b.ms);const parts=[Uint8Array.of(1),latinBytes('kor'),Uint8Array.of(2,1),utf16LE(''),Uint8Array.of(0,0)];for(const x of lines.slice(0,30000))parts.push(utf16LE(x.text),Uint8Array.of(0,0),be32(x.ms));return frame('SYLT',join(...parts))}
-async function buildMp3(song){const frames=[];for(const k of FIELDS){if(song.data[k]?.trim())frames.push(textFrame(FIELD_TAGS[k],song.data[k]))}if(song.lyrics.trim())frames.push(lyricsFrame(song.lyrics.trim()));if(song.synced.trim()){const syn=syncedFrame(song.synced);if(syn)frames.push(syn)}if(song.cover){const image=await normalizeImage(song.cover.blob);const bytes=new Uint8Array(await image.blob.arrayBuffer());if(!isJpeg(bytes))throw Error('앨범아트 JPEG 변환 검증 실패');frames.push(pictureFrame({mime:'image/jpeg',bytes}))}for(const k of song.kept)frames.push(frame(k.id,k.body,k.flags));if(!frames.length)frames.push(textFrame('TIT2',filenameBase(song.file.name)));
-const body=join(...frames, new Uint8Array(512));if(body.length>268435455)throw Error('태그 크기가 허용 범위를 초과했습니다.');const header=join(latinBytes('ID3'),Uint8Array.of(3,0,0),synBytes(body.length),body);let end=song.file.size;if(end>=128){const tail=new Uint8Array(await song.file.slice(end-128,end-125).arrayBuffer());if(String.fromCharCode(...tail)==='TAG')end-=128;}return new Blob([header,song.file.slice(Math.min(song.offset,song.file.size),end)],{type:'audio/mpeg'})}
+async function buildMp3(song, sourceFile=song.file){const frames=[];for(const k of FIELDS){if(song.data[k]?.trim())frames.push(textFrame(FIELD_TAGS[k],song.data[k]))}if(song.lyrics.trim())frames.push(lyricsFrame(song.lyrics.trim()));if(song.synced.trim()){const syn=syncedFrame(song.synced);if(syn)frames.push(syn)}if(song.cover){const image=await normalizeImage(song.cover.blob);const bytes=new Uint8Array(await image.blob.arrayBuffer());if(!isJpeg(bytes))throw Error('앨범아트 JPEG 변환 검증 실패');frames.push(pictureFrame({mime:'image/jpeg',bytes}))}for(const k of song.kept)frames.push(frame(k.id,k.body,k.flags));if(!frames.length)frames.push(textFrame('TIT2',filenameBase(song.file.name)));
+const body=join(...frames, new Uint8Array(512));if(body.length>268435455)throw Error('태그 크기가 허용 범위를 초과했습니다.');const header=join(latinBytes('ID3'),Uint8Array.of(3,0,0),synBytes(body.length),body);let end=sourceFile.size;if(end>=128){const tail=new Uint8Array(await sourceFile.slice(end-128,end-125).arrayBuffer());if(String.fromCharCode(...tail)==='TAG')end-=128;}return new Blob([header,sourceFile.slice(Math.min(song.offset,sourceFile.size),end)],{type:'audio/mpeg'})}
 async function loadFile(file){if(!/\.mp3$/i.test(file.name))return null;const header=await file.slice(0,10).arrayBuffer(),h=new Uint8Array(header);let readSize=10;if(h.length===10&&String.fromCharCode(...h.slice(0,3))==='ID3')readSize=Math.min(file.size,Math.max(10,10+synSize(h,6)+(h[3]===4&&(h[5]&0x10)?10:0)));if(readSize>32*1024*1024)throw Error('32MB를 넘는 메타데이터 태그는 안전을 위해 불러오지 않습니다.');const bytes=new Uint8Array(await file.slice(0,readSize).arrayBuffer()),parsed=parseTag(bytes),guess=guessFromFile(file.name);const id3v1=file.size>=128?readID3v1(new Uint8Array(await file.slice(file.size-128).arrayBuffer())):null;const d={...Object.fromEntries(FIELDS.map(k=>[k,''])),...guess,...(id3v1||{}),...parsed.data};return {id:++progressToken,file,data:d,lyrics:parsed.lyrics,synced:parsed.synced,cover:parsed.cover?makeCover(parsed.cover.blob,parsed.cover.mime):null,originalCover:!!parsed.cover,savedCoverVerified:false,candidateArtURL:'',offset:parsed.offset,kept:parsed.kept,version:parsed.version,warnings:parsed.warnings,matched:false,loading:false}}
 function makeCover(blob,mime){return {blob,mime,url:URL.createObjectURL(blob)}}
 const MP3_PICKER_TYPES=[{description:'MP3 오디오',accept:{'audio/mpeg':['.mp3']}}];
 function canUseFilePicker(){return !!(window.isSecureContext&&(typeof window.showOpenFilePicker==='function'||typeof window.showSaveFilePicker==='function'))}
 function setSaveFeedback(message,status=''){const box=$('saveFeedback');if(!box)return;box.textContent=message;box.className='save-feedback'+(status?' '+status:'')}
-function updateOverwriteUI(){const btn=$('overwriteBtn');if(!btn)return;btn.disabled=!selected;const direct=canUseFilePicker();btn.textContent=direct?'원본 덮어쓰기':'같은 이름으로 저장 ↓';$('overwriteHint').textContent=!selected?'MP3 파일을 먼저 추가해 주세요.':!direct?'이 브라우저/실행 환경은 원본 파일 직접 수정 기능이 없습니다. 버튼은 동작하며 원래 파일명으로 MP3를 다운로드합니다. 다운로드된 파일을 사용자가 기존 파일과 직접 교체해야 합니다. Chrome·Edge에서 HTTPS 또는 localhost로 열면 직접 덮어쓰기가 가능합니다.':selected.fileHandle?'원본 수정 권한이 연결되었습니다. 덮어쓰기는 저장 전 확인을 거치고 저장 후 ID3/앨범아트를 다시 검사합니다.':'덮어쓰기 버튼을 누르면 원본 파일을 다시 선택합니다. 파일이 일치하고 쓰기 권한을 승인하면 직접 변경합니다.'}
+// Chromium's getFile() returns a snapshot that becomes unreadable after a disk write.
+// Materialize its bytes into independent Blob data BEFORE opening createWritable().
+// A Blob built directly from File.slice() may still refer to the disk file.
+async function detachFileBytes(file){
+ const size=file.size,step=8*1024*1024,chunks=[];
+ if(size>768*1024*1024)throw Error('768MB를 넘는 파일은 메모리 보호를 위해 직접 덮어쓰지 않습니다. 다른 이름으로 저장을 이용하세요.');
+ for(let start=0;start<size;start+=step){
+  const end=Math.min(size,start+step),bytes=new Uint8Array(await file.slice(start,end).arrayBuffer());
+  if(bytes.byteLength!==end-start)throw Error('원본 MP3 전체 데이터를 읽지 못했습니다.');
+  chunks.push(bytes);
+  if(start&&start%(step*4)===0)setSaveFeedback('원본 데이터를 안전하게 복사하는 중… '+Math.floor(end/size*100)+'%');
+ }
+ const detached=new Blob(chunks,{type:'audio/mpeg'});
+ if(detached.size!==size)throw Error('읽어온 원본 파일 크기가 일치하지 않습니다.');
+ return detached;
+}
+function releaseAudioForWrite(song){
+ if(selected!==song)return;
+ const audio=$('audioPlayer');audio.pause();audio.removeAttribute('src');audio.load();
+ if(activeObjectURL){URL.revokeObjectURL(activeObjectURL);activeObjectURL=null;}
+}
+function sourceChangedError(error){return ['NotReadableError','InvalidStateError'].includes(error?.name)||/state (?:had )?changed|cached in an interface object|read from disk/i.test(error?.message||'')}
+function updateOverwriteUI(){const btn=$('overwriteBtn');if(!btn)return;btn.disabled=!selected;const refresh=$('refreshBtn');refresh.hidden=!selected?.fileHandle;refresh.disabled=!selected?.fileHandle;const direct=canUseFilePicker();btn.textContent=direct?'원본 덮어쓰기':'같은 이름으로 저장 ↓';$('overwriteHint').textContent=!selected?'MP3 파일을 먼저 추가해 주세요.':!direct?'이 브라우저/실행 환경은 원본 파일 직접 수정 기능이 없습니다. 버튼은 동작하며 원래 파일명으로 MP3를 다운로드합니다. 다운로드된 파일을 사용자가 기존 파일과 직접 교체해야 합니다. Chrome·Edge에서 HTTPS 또는 localhost로 열면 직접 덮어쓰기가 가능합니다.':selected.fileHandle?'원본 수정 권한이 연결되었습니다. 덮어쓰기는 저장 전 확인을 거치고 저장 후 ID3/앨범아트를 다시 검사합니다.':'덮어쓰기 버튼을 누르면 원본 파일을 다시 선택합니다. 파일이 일치하고 쓰기 권한을 승인하면 직접 변경합니다.'}
 function setCoverStatus(song){const status=$('coverStatus'),btn=$('coverExternal');if(!status||!btn)return;btn.hidden=!song?.candidateArtURL;btn.disabled=!song?.candidateArtURL;status.classList.toggle('warn',!song?.cover);status.textContent=!song?'앨범아트 없음':song.cover?((song.savedCoverVerified?'생성한 MP3에서 확인 · ':song.originalCover?'원본 MP3에서 확인 · ':'저장 대기 · ')+'앨범아트 준비됨 (저장 시 JPEG로 삽입)'):(song.candidateArtURL?'앨범 이미지 자동 수신 실패. 「검색 이미지 열기」에서 저장한 뒤 「이미지 변경」으로 넣어주세요.':'앨범아트가 없습니다. 검색 결과만 보이는 경우에도 직접 포함 여부를 확인하세요.')}
 
 function revokeCover(song){if(song?.cover?.url)URL.revokeObjectURL(song.cover.url)}
@@ -248,49 +270,86 @@ async function verifyBuiltMp3(blob,song){
  return {cover:!!parsed.cover,coverBytes:parsed.cover?.blob.size||0,version:parsed.version,fields:parsed.data};
 }
 function detailSaved(info){return info.cover?'앨범아트 포함 확인 (JPEG, '+Math.round(info.coverBytes/1024)+'KB)':'앨범아트 미포함 (이미지 선택 필요)'}
+async function refreshSelectedFromDisk(){
+ const song=selected;
+ if(!song?.fileHandle){toast('원본 수정용 파일을 먼저 열어 주세요.');return}
+ const btn=$('refreshBtn');btn.disabled=true;setSaveFeedback('디스크에서 원본 다시 읽는 중…');
+ try{
+  const fresh=await song.fileHandle.getFile(),parsed=await loadFile(fresh);
+  if(fresh.name!==song.file.name)throw Error('다른 원본 파일이 선택되어 있습니다.');
+  // Preserve unsaved user edits; only update the source audio and parsed source frames.
+  song.file=fresh;song.offset=parsed.offset;song.kept=parsed.kept;song.version=parsed.version;
+  song.warnings=parsed.warnings;song.originalSize=fresh.size;song.originalModified=fresh.lastModified;
+  if(!song.cover&&parsed.cover){song.cover=parsed.cover;song.originalCover=parsed.originalCover}
+  else if(parsed.cover)revokeCover(parsed);
+  selectSong(song);
+  setSaveFeedback('원본 MP3를 디스크에서 다시 읽었습니다. 편집 중인 제목·가수·앨범·가사·앨범아트는 유지했습니다. 저장 전 태그 검사를 진행해 주세요.','ok');
+  toast('원본 재연결 완료 · 편집 정보 유지');
+ }catch(e){setSaveFeedback('원본 다시 읽기 실패: '+e.message+'. 파일이 다른 프로그램에서 사용 중인지 확인하거나 새로 추가해 주세요.','error')}
+ finally{btn.disabled=false}
+}
 async function overwriteSelected(){
  const song=selected;if(!song){toast('먼저 MP3 파일을 선택하세요.');return}
  const btn=$('overwriteBtn');btn.disabled=true;setSaveFeedback('저장 대상 확인 중…');
+ let stagedBlob=null,writeCommitted=false,writeOpened=false;
  try{
   if(!canUseFilePicker()){
-   const blob=await buildMp3(song);const info=await verifyBuiltMp3(blob,song);
-   // A browser download is not a real overwrite; be explicit.
-   clickDownload(blob,song.file.name);
-   song.savedCoverVerified=info.cover;setCoverStatus(song);
-   setSaveFeedback('직접 덮어쓰기 미지원: 원본과 같은 파일명으로 다운로드했습니다. 브라우저가 이름 뒤에 (1)을 붙일 수 있습니다. 다운로드 폴더에서 사용자가 원본을 직접 교체하세요. '+detailSaved(info),'ok');
-   toast('원본과 같은 파일명으로 다운로드했습니다. 기존 MP3는 아직 변경되지 않았습니다.');return;
+   const blob=await buildMp3(song),info=await verifyBuiltMp3(blob,song);
+   clickDownload(blob,song.file.name);song.savedCoverVerified=info.cover;setCoverStatus(song);
+   setSaveFeedback('직접 덮어쓰기 미지원: 같은 파일명으로 다운로드했습니다. 원본은 변경되지 않았습니다. 파일을 직접 교체해 주세요. '+detailSaved(info),'ok');
+   toast('같은 이름으로 MP3 다운로드 · 기존 파일은 유지됩니다.');return;
   }
-  // The picker MUST be invoked before any confirm or await that could lose transient user activation.
+  // A picker must be opened directly from the user's click (transient activation).
   let handle=song.fileHandle;
   if(!handle){
    if(typeof window.showOpenFilePicker==='function')handle=(await window.showOpenFilePicker({multiple:false,types:MP3_PICKER_TYPES}))[0];
    else if(typeof window.showSaveFilePicker==='function')handle=await window.showSaveFilePicker({suggestedName:song.file.name,types:MP3_PICKER_TYPES});
   }
-  if(!handle){setSaveFeedback('덮어쓰기 대상 파일이 선택되지 않았습니다.');return}
-  if(typeof handle.queryPermission==='function'){
-   const permission=await handle.queryPermission({mode:'readwrite'});
-   if(permission!=='granted'){
-    if(typeof handle.requestPermission!=='function'||await handle.requestPermission({mode:'readwrite'})!=='granted')throw Error('파일 쓰기 권한이 승인되지 않았습니다.');
-   }
+  if(!handle){setSaveFeedback('덮어쓰기 대상 파일을 선택하지 않았습니다.');return}
+  if(typeof handle.queryPermission==='function'&&await handle.queryPermission({mode:'readwrite'})!=='granted'){
+   if(typeof handle.requestPermission!=='function'||await handle.requestPermission({mode:'readwrite'})!=='granted')throw Error('파일 쓰기 권한이 승인되지 않았습니다.');
   }
   const existing=await handle.getFile();
-  if(!(await isSameOriginal(existing,song.file)))throw Error('선택한 파일이 불러온 원본과 다릅니다. 동일한 MP3를 선택하세요.');
-  if(!confirm('「'+song.file.name+'」 원본 파일을 직접 수정합니다.\n원본을 백업하셨나요? 계속하시겠습니까?')){setSaveFeedback('사용자가 원본 덮어쓰기를 취소했습니다.');return}
-  setSaveFeedback('태그 생성 및 앨범아트 검사 중…');const blob=await buildMp3(song),info=await verifyBuiltMp3(blob,song);
-  const latest=await handle.getFile();if(!(await isSameOriginal(latest,song.file)))throw Error('저장 직전 원본 파일이 변경됐습니다. 저장을 중단합니다.');
-  const writable=await handle.createWritable({keepExistingData:false});
-  try{await writable.write(blob);await writable.close()}catch(e){try{await writable.abort()}catch{}throw e}
-  const fresh=await handle.getFile(),verified=await verifyBuiltMp3(fresh,song),parsed=await loadFile(fresh);
+  if(!(await isSameOriginal(existing,song.file)))throw Error('원본 파일이 처음 불러온 상태와 다릅니다. 같은 파일을 다시 불러온 후 저장하세요.');
+  song.fileHandle=handle;updateOverwriteUI();
+  if(!confirm('「'+song.file.name+'」 원본 파일을 직접 수정합니다.\n중요한 MP3를 백업하셨나요? 계속하시겠습니까?')){setSaveFeedback('원본 덮어쓰기를 취소했습니다.');return}
+  // Read the current disk snapshot into independent memory before creating a writer.
+  // Without this, write(blob) may try to read the same file after it was replaced/truncated.
+  setSaveFeedback('원본 음원을 메모리에 안전하게 복사하는 중…');
+  const detachedSource=await detachFileBytes(existing);
+  setSaveFeedback('태그 생성 및 앨범아트 검사 중…');
+  stagedBlob=await buildMp3(song,detachedSource);
+  const info=await verifyBuiltMp3(stagedBlob,song);
+  const latest=await handle.getFile();
+  if(latest.name!==existing.name||latest.size!==existing.size||latest.lastModified!==existing.lastModified)throw Error('저장 준비 중 원본 파일이 변경됐습니다. 원본 다시 읽기를 실행해 주세요.');
+  // Windows media-player/file locks can interfere with replacing the source file.
+  releaseAudioForWrite(song);
+  setSaveFeedback('원본 MP3에 쓰는 중…');
+  const writable=await handle.createWritable({keepExistingData:false});writeOpened=true;
+  try{await writable.write(stagedBlob);await writable.close();writeCommitted=true}
+  catch(e){try{await writable.abort()}catch{}throw e}
+  const fresh=await handle.getFile();
+  if(fresh.size!==stagedBlob.size)throw Error('디스크에 기록된 파일 크기가 예상과 다릅니다.');
+  const verified=await verifyBuiltMp3(fresh,song),parsed=await loadFile(fresh);
   revokeCover(song);
   Object.assign(song,{file:fresh,data:parsed.data,lyrics:parsed.lyrics,synced:parsed.synced,cover:parsed.cover,originalCover:parsed.originalCover,savedCoverVerified:verified.cover,candidateArtURL:'',offset:parsed.offset,kept:parsed.kept,version:parsed.version,warnings:parsed.warnings,fileHandle:handle,originalSize:fresh.size,originalModified:fresh.lastModified});
   if(selected===song)selectSong(song);else renderFiles();
-  setSaveFeedback('원본 덮어쓰기 성공 · 저장된 파일을 다시 열어 확인했습니다. '+detailSaved(verified),'ok');toast('원본 MP3 저장 완료 · '+detailSaved(verified));
+  setSaveFeedback('원본 덮어쓰기 성공 · 디스크에서 새 파일을 다시 읽어 검증했습니다. '+detailSaved(verified),'ok');
+  toast('원본 MP3 수정 완료 · '+detailSaved(verified));
  }catch(e){
-  const cancel=e.name==='AbortError';
-  if(cancel){setSaveFeedback('파일 선택을 취소했습니다.');}
-  else if(['SecurityError','NotAllowedError','NotSupportedError'].includes(e.name)){
-   try{const blob=await buildMp3(song),info=await verifyBuiltMp3(blob,song);clickDownload(blob,song.file.name);setSaveFeedback('브라우저가 원본 파일 쓰기를 차단했습니다 ('+e.name+'). 대신 같은 이름으로 MP3를 다운로드했습니다. 실제 원본은 변경되지 않았으며 다운로드 파일을 직접 교체해야 합니다. '+detailSaved(info),'error');toast('원본 쓰기가 차단되어 같은 이름으로 다운로드했습니다.');}catch(inner){setSaveFeedback('원본 쓰기 차단 후 대체 저장도 실패: '+inner.message,'error')}
-  }else{setSaveFeedback('원본 저장 실패: '+e.message,'error');toast('원본 덮어쓰기 실패: '+e.message)}
+  if(e.name==='AbortError')setSaveFeedback('파일 선택 또는 저장을 취소했습니다.');
+  else if(writeCommitted){
+   setSaveFeedback('원본 쓰기는 완료됐지만 저장 후 확인에 실패했습니다: '+e.message+' · 같은 파일을 새로 열어 검사하세요. 다시 덮어쓰지 마세요.','error');
+   toast('쓰기 완료 · 결과 확인 필요');
+  }else if(sourceChangedError(e)){
+   setSaveFeedback('원본 파일 상태가 변경되어 저장을 중단했습니다: '+e.message+' · 「원본 다시 읽기」를 누른 후 재시도하세요. 파일을 다른 프로그램에서 사용 중이라면 닫아 주세요.','error');
+   toast('원본 파일 상태 변경 감지 · 다시 읽기 필요');
+  }else if(['SecurityError','NotAllowedError','NotSupportedError'].includes(e.name)){
+   try{const blob=stagedBlob||await buildMp3(song),info=await verifyBuiltMp3(blob,song);clickDownload(blob,song.file.name);setSaveFeedback('브라우저가 파일 수정을 차단했습니다 ('+e.name+'). 대신 MP3를 다운로드했습니다. 기존 원본은 직접 교체하세요. '+detailSaved(info),'error');toast('원본 수정 차단 · MP3 다운로드 제공')}catch(inner){setSaveFeedback('원본 수정 차단 후 다운로드도 실패: '+inner.message,'error')}
+  }else{
+   setSaveFeedback((writeOpened?'원본 기록 오류: ':'원본 저장 실패: ')+e.message+(writeOpened?' · 파일이 정상인지 확인하세요.':''),'error');
+   toast('원본 덮어쓰기 실패: '+e.message);
+  }
  }finally{btn.disabled=false;updateOverwriteUI()}
 }
 async function verifySelected(){if(!selected)return;const btn=$('verifyBtn');btn.disabled=true;setSaveFeedback('저장 예정 태그 검사 중…');try{const blob=await buildMp3(selected),info=await verifyBuiltMp3(blob,selected);setSaveFeedback('저장 예정 MP3 검증 성공 · '+detailSaved(info)+' · 예상 파일 크기 '+formatSize(blob.size),'ok');}catch(e){setSaveFeedback('태그 검사 실패: '+e.message,'error')}finally{btn.disabled=false}}
@@ -309,13 +368,13 @@ $('clearAll').onclick=()=>{if(!songList.length)return;if(!confirm(`${songList.le
 for(const field of FIELDS){$(field).addEventListener('input',e=>{if(!selected)return;selected.data[field]=e.target.value;if(field==='title'||field==='artist')renderFiles()})}for(const key of ['lyrics','synced'])$(key).addEventListener('input',e=>{if(selected)selected[key]=e.target.value});
 $('coverPick').onclick=()=>$('imageInput').click();$('imageInput').onchange=async e=>{const file=e.target.files?.[0];e.target.value='';if(!file||!selected)return;try{const normalized=await normalizeImage(file);replaceCover(selected,normalized);toast('앨범아트 적용 완료')}catch(e){toast('이미지 오류: '+e.message)}};
 $('coverRemove').onclick=()=>{if(!selected)return;revokeCover(selected);selected.cover=null;selected.savedCoverVerified=false;selected.candidateArtURL='';showCover(selected);setCoverStatus(selected);renderFiles()};$('coverExternal').onclick=()=>{if(selected?.candidateArtURL)window.open(selected.candidateArtURL,'_blank','noopener,noreferrer')};
-$('saveBtn').onclick=saveSelected;$('overwriteBtn').onclick=overwriteSelected;$('verifyBtn').onclick=verifySelected;$('zipBtn').onclick=saveZip;$('autoAllBtn').onclick=autoAll;$('diagnoseBtn').onclick=diagnoseSearch;
+$('saveBtn').onclick=saveSelected;$('overwriteBtn').onclick=overwriteSelected;$('refreshBtn').onclick=refreshSelectedFromDisk;$('verifyBtn').onclick=verifySelected;$('zipBtn').onclick=saveZip;$('autoAllBtn').onclick=autoAll;$('diagnoseBtn').onclick=diagnoseSearch;
 $('autoBtn').onclick=()=>{if(!selected)return;setTab('all');$('searchArtist').value=selected.data.artist||'';$('searchTitle').value=selected.data.title||filenameBase(selected.file.name);switchView('search');runSearch()};$('lyricsBtn').onclick=()=>{if(!selected)return;setTab('lyrics');$('searchArtist').value=selected.data.artist||'';$('searchTitle').value=selected.data.title||'';switchView('search');runSearch()};$('lrcBtn').onclick=lrcSave;
 $('searchBtn').onclick=runSearch;$('externalBtn').onclick=openSite;$('youtubeOpen').onclick=()=>{if(!selected)return;$('searchArtist').value=selected.data.artist||'';$('searchTitle').value=selected.data.title||'';setTab('youtube');openSite()};$('useArtist').onclick=()=>{if(selected)$('searchArtist').value=selected.data.artist||''};$('useFileTitle').onclick=()=>{if(selected)$('searchTitle').value=filenameBase(selected.file.name)};
 $('searchArtist').addEventListener('keydown',e=>{if(e.key==='Enter')runSearch()});$('searchTitle').addEventListener('keydown',e=>{if(e.key==='Enter')runSearch()});
 window.addEventListener('beforeunload',()=>{for(const s of songList)revokeCover(s);if(activeObjectURL)URL.revokeObjectURL(activeObjectURL)});
 // Automated local test support: exposed only when ?test=1, does not transmit any data.
-if(new URLSearchParams(location.search).has('test'))window.__MP3StudioTest={parseTag,buildMp3,loadFile,syncedFrame,crcBlob,addFiles,getSongList:()=>songList,appleJSONP,appleSearch,brainzSearch,searchIntegrated,isSameOriginal,overwriteSelected,canUseFilePicker,verifyBuiltMp3,normalizeImage,verifySelected};
+if(new URLSearchParams(location.search).has('test'))window.__MP3StudioTest={parseTag,buildMp3,loadFile,syncedFrame,crcBlob,addFiles,getSongList:()=>songList,appleJSONP,appleSearch,brainzSearch,searchIntegrated,isSameOriginal,overwriteSelected,canUseFilePicker,verifyBuiltMp3,normalizeImage,verifySelected,detachFileBytes,refreshSelectedFromDisk};
 renderFiles();switchView('editor');setTab('all');updateOverwriteUI();
 })();
 </script></body></html>
